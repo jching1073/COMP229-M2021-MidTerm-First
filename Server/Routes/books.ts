@@ -32,7 +32,8 @@ router.get('/add', (req, res, next) =>
 });
 
 // POST process the Book Details page and create a new Book - CREATE
-router.post('/add', (req, res, next) => {
+router.post('/add', (req, res, next) => 
+{
 
     let newBook = new book
     ({
@@ -55,11 +56,22 @@ router.post('/add', (req, res, next) => {
 });
 
 // GET the Book Details page in order to edit an existing Book
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => 
+{
+    let id = req.params.id; //get id
+    console.log(id); //check id in log
 
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+    book.findById(id, {}, {}, (err, editBook) =>
+    {
+      if(err)
+      {
+        console.error(err);
+        res.end(err);
+      }
+
+      res.render('books/details', {title: 'Edit', page: 'edit', books: editBook});
+    })
+
 
 });
 
